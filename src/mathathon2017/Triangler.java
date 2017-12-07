@@ -11,7 +11,7 @@ public class Triangler {
         String logo = "solinor_avatar.png";
         BufferedImage image = ImageUtils.getImage(logo);
         ImageBase base = new ImageBase();
-        for(int i = 0; i<20; i++) {
+        for(int i = 0; i<30; i++) {
             base.getTriangles().add(createRandomTriangle(image.getWidth(), image.getHeight()));
         }
         
@@ -29,7 +29,10 @@ public class Triangler {
                 System.out.println(index + ": distance: " + distance);
                 System.out.println(base);
                 index++;
-                if(index%10==0) ImageUtils.saveImage(base, "pics/best" + index, image.getWidth(), image.getHeight());
+                if(index%10==0) {
+                    ImageUtils.saveImage(base, "pics/best" + index, image.getWidth(), image.getHeight());
+                    ImageUtils.submitPicture(base); 
+                }
             }
             else {
                 base.getTriangles().remove(base.getTriangles().size()-1);

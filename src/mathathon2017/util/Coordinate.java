@@ -13,7 +13,7 @@ public class Coordinate {
     }
     
     public String toString() {
-        return "["+x+","+y+"]";
+        return "{\"x\":"+x+",\"y\":"+y+"}";
     }
     public Coordinate copy() {
         return new Coordinate(x,y);

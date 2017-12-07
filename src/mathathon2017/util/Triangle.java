@@ -7,19 +7,23 @@ public class Triangle {
     public Coordinate c = new Coordinate();
     public int red, green, blue;
     public int opacity;
-    
+
     public void setColor(int r, int g, int b) {
         this.red = r;
         this.green = g;
         this.blue = b;
     }
-    
+
     public String toString() {
-        return "{\"coordinates\":["+a+","+b+","+c+"],"+
-               "\"color\":["+red+","+green+","+blue+"],"+
-               "\"opacity\":"+opacity+"}";
+        return "{\"a\":"+a+","+
+                "\"b\":"+b+","+
+                "\"c\":"+c+","+
+                "\"red\":"+red+","+
+                "\"green\":"+green+","+
+                "\"blue\":"+blue+","+
+                "\"opacity\":"+opacity+"}";
     }
-    
+
     public Triangle copy() {
         Triangle t = new Triangle();
         t.setColor(red, green, blue);
@@ -28,6 +32,6 @@ public class Triangle {
         t.b = b.copy();
         t.c = c.copy();
         return t;
-        
+
     }
 }
