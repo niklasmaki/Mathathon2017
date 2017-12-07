@@ -18,7 +18,7 @@ import mathathon2017.util.ImageBase;
 public class ImageUtils {
     
     private static String teamName = "test";
-    private static String resultServiceURL = "http://localhost:8080/submit/" +teamName;
+    private static String resultServiceURL = "http://solinor.herokuapp.com/submit/" +teamName;
     public static BufferedImage getImage(String path) {
         File imgFile = new File(path);
         BufferedImage image = null;
@@ -41,13 +41,14 @@ public class ImageUtils {
         final byte[] newBytes = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
 
         for(int i = 0; i < originalBytes.length; i+=4) {
-            for(int x=1; x<4; x++) distance += Math.abs(originalBytes[i+x]-newBytes[i+x]);
+        	//first pixel is opacity
+        	for(int x=1; x<4; x++) distance += Math.abs(originalBytes[i+x]-newBytes[i+x]);
         }
             
         return distance;
     }
 
-    private static BufferedImage drawImage(ImageBase base, int width, int height) {
+    public static BufferedImage drawImage(ImageBase base, int width, int height) {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 
         Graphics2D graphics = image.createGraphics();

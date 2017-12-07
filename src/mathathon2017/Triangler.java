@@ -19,6 +19,7 @@ public class Triangler {
         System.out.println("0: distance: " + distance);
         System.out.println(base);
         int index = 0;
+        
         while(true) {
             Triangle original = base.getTriangles().remove(0);
             Triangle mutated = mutate(original, image);
