@@ -48,7 +48,7 @@ public class Triangler {
         t.b = new Coordinate(rnd(height), rnd(width));
         t.c = new Coordinate(rnd(height), rnd(width));
         t.setColor(5, 172, 240);
-        t.opacity = 10 + rnd(245);
+        t.opacity = 255;
         return t;
     }
     private static Triangle mutate(Triangle triangle, BufferedImage image) {
