@@ -28,7 +28,7 @@ public class Triangler {
         int iteraatioita = 0;
         long uusDistance = distance;
         long alkuDistance = distance;
-        while(iteraatioita < 101) {
+        while(true) {
             Triangle original = base.getTriangles().remove(0);
             Triangle mutated = mutate(original, image);
             base.getTriangles().add(mutated);
