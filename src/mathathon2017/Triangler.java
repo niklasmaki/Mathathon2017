@@ -48,7 +48,7 @@ public class Triangler {
             }
             
         }
-        //Tänne tulostus suppenemisesta
+        //Tï¿½nne tulostus suppenemisesta
         System.out.println("Distance parani: " + (alkuDistance - uusDistance));
     }
     
@@ -62,8 +62,6 @@ public class Triangler {
         return t;
     }
     
-<<<<<<< HEAD
-=======
     private static void setColorOfTriangle(int ax, int ay, int bx, int by, int cx, int cy, BufferedImage image, Triangle t) {
         double lambda = 1/10;
         int kax = (ax + bx + cx)/3;
@@ -84,7 +82,6 @@ public class Triangler {
         t.setColor(red, green, blue);
     }
     
->>>>>>> ccd1eaae93cc8a5773c809a168eb8ea28e2478c0
     private static Triangle mutate(Triangle triangle, BufferedImage image) {
         Triangle t = triangle.copy();
         if(flipCoin()) {
@@ -122,7 +119,7 @@ public class Triangler {
                 t.blue = changeColor(t.blue);
                 break;
             case 3:
-                t.opacity = 10+rnd(245);
+                t.opacity = changeColor(t.opacity);
                 break;
             }
         }
