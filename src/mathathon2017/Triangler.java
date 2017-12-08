@@ -52,7 +52,6 @@ public class Triangler {
             }
             
         }
-        //T�nne tulostus suppenemisesta
     }
     
     private static Triangle createRandomEdgePointTriangle(List<Coordinate> edgeCoords,BufferedImage image) {
