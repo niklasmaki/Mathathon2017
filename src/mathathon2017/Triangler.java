@@ -53,7 +53,7 @@ public class Triangler {
     }
 
     public static void main(String[] args) {
-        String logo = "solinor_avatar.png";
+        String logo = "talvi.png";
         image = ImageUtils.getImage(logo);
         int width = image.getWidth();
         int height = image.getHeight();
