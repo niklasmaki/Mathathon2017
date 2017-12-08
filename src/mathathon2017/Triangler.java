@@ -56,22 +56,22 @@ public class Triangler {
         if(flipCoin()) {
             switch(rnd(6)){
             case 0:
-                t.a.x = rnd(image.getHeight());
+                t.a.x = changeCoordinates(t.a.x,image.getHeight());
                 break;
             case 1:
-                t.a.y = rnd(image.getWidth());
+                t.a.y = changeCoordinates(t.a.y,image.getWidth());
                 break;
             case 2:
-                t.b.x = rnd(image.getHeight());
+                t.b.x = changeCoordinates(t.b.x,image.getHeight());
                 break;
             case 3:
-                t.b.y = rnd(image.getWidth());
+                t.b.y = changeCoordinates(t.b.y,image.getWidth());
                 break;
             case 4:
-                t.c.x = rnd(image.getHeight());
+                t.c.x = changeCoordinates(t.c.x,image.getHeight());
                 break;
             case 5:
-                t.c.y = rnd(image.getWidth());
+                t.c.y = changeCoordinates(t.c.y,image.getWidth());
             default:
                 break;
             }
@@ -79,13 +79,13 @@ public class Triangler {
         else {
             switch(rnd(4)){
             case 0:
-                t.red = changeColor(triangle.red);
+                t.red = changeColor(t.red);
                 break;
             case 1:
-                t.green = changeColor(triangle.green);
+                t.green = changeColor(t.green);
                 break;
             case 2:
-                t.blue = changeColor(triangle.blue);
+                t.blue = changeColor(t.blue);
                 break;
             case 3:
                 t.opacity = 10+rnd(245);
@@ -95,8 +95,18 @@ public class Triangler {
         return t;
     }
     
+    private static int changeCoordinates(int position,int maxSize) {
+        position = position + rnd(70) - 35;
+        if (position > maxSize) {
+            return maxSize - 1;
+        } else if(position < 0) {
+            return 0;
+        }
+        return position;
+    }
+    
     private static int changeColor(int color) {
-        color = color + rnd(10) - 5;
+        color = color + rnd(20) - 10;
         if(color > 255) {
             return 255;
         } else if(color < 0) {
