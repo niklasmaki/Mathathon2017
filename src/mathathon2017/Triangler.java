@@ -72,8 +72,7 @@ public class Triangler {
         int index = 0;
 
         while (true) {
-            index++;
-            int lukuind = index % k;
+            int lukuind = index++ % luvut.length;
             muuta(luvut, lukuind);
 
             base = luvutToKuva(luvut);
