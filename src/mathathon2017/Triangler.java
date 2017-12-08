@@ -123,7 +123,7 @@ public class Triangler {
     }
     
     private static int changeCoordinates(int position,int maxSize, long distance) {
-        int luku = (int) (4*distance/1000000 + 40);
+        int luku = (int) (7*distance/1000000 + 40);
         position = position + rnd(luku) - luku/2;
         if (position > maxSize) {
             return maxSize - 1;
