@@ -18,7 +18,7 @@ import mathathon2017.util.Coordinate;
  */
 public class EdgeDetector {
     
-    private final double EPSILON =  0.5;
+    private final double EPSILON =  3000000;
     
     public List<Coordinate> getEdgeCoordinates(BufferedImage image) {
         Set<Coordinate> coords = new HashSet<>();
