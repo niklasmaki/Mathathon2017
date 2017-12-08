@@ -52,7 +52,7 @@ public class Triangler {
         t.a = edgeCoords.get(rnd(edgeCoords.size()));
         t.b = edgeCoords.get(rnd(edgeCoords.size()));
         t.c = edgeCoords.get(rnd(edgeCoords.size()));
-        setColorOfTriangle(t.a.x,t.a.y,t.b.x,t.b.y,t.c.x,t.c.y,image,t);
+        setColorOfTriangle(image,t);
         t.opacity = 255;
         return t;
     }
@@ -67,23 +67,14 @@ public class Triangler {
         return t;
     }
     
-    private static void setColorOfTriangle(int ax, int ay, int bx, int by, int cx, int cy, BufferedImage image, Triangle t) {
-        double lambda = 1/10;
-        int kax = (ax + bx + cx)/3;
-        int kay = (ay + by + cy)/3;
-        int aax = (int) Math.round(lambda*(bx-ax) + lambda*(cx-ax) + ax);
-        int aay = (int) Math.round(lambda*(by-ay) + lambda*(cy-ay) + ay);
-        int bax = (int) Math.round(lambda*(ax-bx) + lambda*(cx-bx) + bx);
-        int bay = (int) Math.round(lambda*(ay-by) + lambda*(cy-by) + by);
-        int cax = (int) Math.round(lambda*(ax-cx) + lambda*(ax-cx) + cx);
-        int cay = (int) Math.round(lambda*(ay-cy) + lambda*(ay-cy) + cy);
-        Color yksi = new Color(image.getRGB(kax, kay));
-        Color kaksi = new Color(image.getRGB(aax, aay));
-        Color kolme = new Color(image.getRGB(bax, bay));
-        Color nelja = new Color(image.getRGB(cax, cay));
-        int red = (yksi.getRed() + kaksi.getRed() + kolme.getRed() + nelja.getRed())/4;
-        int green = (yksi.getGreen() + kaksi.getGreen() + kolme.getGreen() + nelja.getGreen())/4;
-        int blue = (yksi.getBlue() + kaksi.getBlue() + kolme.getBlue() + nelja.getBlue())/4;
+    private static void setColorOfTriangle(BufferedImage image, Triangle t) {
+        int x = (t.a.x + t.b.x + t.c.x)/3;
+        int y = (t.a.y + t.b.y + t.c.y)/3;
+        int numberColor = image.getRGB(x, y);
+        Color color = new Color(numberColor);
+        int red = color.getRed();
+        int green = color.getGreen();
+        int blue = color.getBlue();
         t.setColor(red, green, blue);
     }
     
@@ -132,7 +123,7 @@ public class Triangler {
     }
     
     private static int changeCoordinates(int position,int maxSize, long distance) {
-        int luku = (int) (distance*2 + 40);
+        int luku = (int) (distance/1000000 + 40);
         position = position + rnd(luku) - luku/2;
         if (position > maxSize) {
             return maxSize - 1;
