@@ -24,18 +24,13 @@ public class Triangler {
         System.out.println("0: distance: " + distance);
         System.out.println(base);
         int index = 0;
-        //Rajoitetaan 100 iteraatioon ja tutkitaan suppenemista eri arvoilla
-        int iteraatioita = 0;
-        long uusDistance = distance;
-        long alkuDistance = distance;
         while(true) {
             Triangle original = base.getTriangles().remove(0);
-            Triangle mutated = mutate(original, image);
+            Triangle mutated = mutate(original, image,distance);
             base.getTriangles().add(mutated);
             long newDistance = ImageUtils.compare(base, image);
             if(newDistance < distance) {
                 distance = newDistance;
-                uusDistance = newDistance;
                 System.out.println(index + ": distance: " + distance);
                 System.out.println(base);
                 index++;
@@ -43,12 +38,10 @@ public class Triangler {
                     ImageUtils.saveImage(base, "pics/best" + index, image.getWidth(), image.getHeight());
 //                    ImageUtils.submitPicture(base); 
                 }
-                iteraatioita++;
             }
             else {
                 base.getTriangles().remove(base.getTriangles().size()-1);
                 base.getTriangles().add(original);
-                iteraatioita++;
             }
             
         }
@@ -94,27 +87,27 @@ public class Triangler {
         t.setColor(red, green, blue);
     }
     
-    private static Triangle mutate(Triangle triangle, BufferedImage image) {
+    private static Triangle mutate(Triangle triangle, BufferedImage image,long distance) {
         Triangle t = triangle.copy();
         if(flipCoin()) {
             switch(rnd(6)){
             case 0:
-                t.a.x = changeCoordinates(t.a.x,image.getHeight());
+                t.a.x = changeCoordinates(t.a.x,image.getHeight(),distance);
                 break;
             case 1:
-                t.a.y = changeCoordinates(t.a.y,image.getWidth());
+                t.a.y = changeCoordinates(t.a.y,image.getWidth(),distance);
                 break;
             case 2:
-                t.b.x = changeCoordinates(t.b.x,image.getHeight());
+                t.b.x = changeCoordinates(t.b.x,image.getHeight(),distance);
                 break;
             case 3:
-                t.b.y = changeCoordinates(t.b.y,image.getWidth());
+                t.b.y = changeCoordinates(t.b.y,image.getWidth(),distance);
                 break;
             case 4:
-                t.c.x = changeCoordinates(t.c.x,image.getHeight());
+                t.c.x = changeCoordinates(t.c.x,image.getHeight(),distance);
                 break;
             case 5:
-                t.c.y = changeCoordinates(t.c.y,image.getWidth());
+                t.c.y = changeCoordinates(t.c.y,image.getWidth(),distance);
             default:
                 break;
             }
@@ -122,24 +115,25 @@ public class Triangler {
         else {
             switch(rnd(4)){
             case 0:
-                t.red = changeColor(t.red);
+                t.red = changeColor(t.red,distance);
                 break;
             case 1:
-                t.green = changeColor(t.green);
+                t.green = changeColor(t.green,distance);
                 break;
             case 2:
-                t.blue = changeColor(t.blue);
+                t.blue = changeColor(t.blue,distance);
                 break;
             case 3:
-                t.opacity = changeColor(t.opacity);
+                t.opacity = changeColor(t.opacity,distance);
                 break;
             }
         }
         return t;
     }
     
-    private static int changeCoordinates(int position,int maxSize) {
-        position = position + rnd(40) - 20;
+    private static int changeCoordinates(int position,int maxSize, long distance) {
+        int luku = (int) (distance*2 + 40);
+        position = position + rnd(luku) - luku/2;
         if (position > maxSize) {
             return maxSize - 1;
         } else if(position < 0) {
@@ -148,8 +142,9 @@ public class Triangler {
         return position;
     }
     
-    private static int changeColor(int color) {
-        color = color + rnd(10) - 5;
+    private static int changeColor(int color,long distance) {
+        int variluku = (int) (10 + distance/1000000) ;
+        color = color + rnd(variluku) - variluku/2;
         if(color > 255) {
             return 255;
         } else if(color < 0) {
