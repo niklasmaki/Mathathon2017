@@ -33,7 +33,7 @@ public class Triangler {
                 index++;
                 if (index % 10 == 0) {
                     ImageUtils.saveImage(base, "pics/best" + index, image.getWidth(), image.getHeight());
-                    ImageUtils.submitPicture(base);
+//                    ImageUtils.submitPicture(base); 
                 }
             } else {
                 base.getTriangles().remove(base.getTriangles().size() - 1);
@@ -54,27 +54,33 @@ public class Triangler {
 
     private static Triangle mutate(Triangle triangle, BufferedImage image) {
         Triangle t = triangle.copy();
-        if (flipCoin()) {
-            switch (rnd(3)) {
+//        if (flipCoin()) {
+            switch (rnd(7)) {
                 case 0:
                     t.a.x = rnd(image.getHeight());
+                    break;
+                case 1:
                     t.a.y = rnd(image.getWidth());
                     break;
-
-                case 1:
+                case 2:
                     t.b.x = rnd(image.getHeight());
+                    break;
+                case 3:
                     t.b.y = rnd(image.getWidth());
                     break;
-
-                case 2:
+                case 4:
                     t.c.x = rnd(image.getHeight());
-                    t.c.y = rnd(image.getWidth());
                     break;
-
+                case 5:
+                    t.c.y = rnd(image.getWidth());
+//                case 6:
+//                    if (distance < 3000000) {
+//                    t.red = 0; t.green = 0; t.blue = 0;
+//                    }
                 default:
                     break;
-            }
-        } else {
+//            }
+//        } else {
 //            if (rnd(10) < 1) {
 //                t.red = 255;
 //                t.blue = 255;
