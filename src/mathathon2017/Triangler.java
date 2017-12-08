@@ -1,5 +1,6 @@
 package mathathon2017;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -10,10 +11,11 @@ import mathathon2017.util.Triangle;
 public class Triangler {
 
     private static int lkm = 30;
-    private static int k = 9;
+    private static int k = 10;
     private static int[] maxarvot;
     private static BufferedImage image;
-    private static int[] erot = new int[]{-100, -10, -1, 1, 10, 100};
+    private static boolean opacity = false;
+    private static int[] erot = new int[]{-20, -1, 1, 20};
 
     private static ImageBase luvutToKuva(int[] luvut) {
         ArrayList<Triangle> kolmiot = new ArrayList<>();
@@ -25,8 +27,11 @@ public class Triangler {
             t.red = luvut[kolmio * k + 6];
             t.green = luvut[kolmio * k + 7];
             t.blue = luvut[kolmio * k + 8];
-            t.opacity = 255;
-            // t.opacity = luvut[kolmio * k + 9];
+            if (opacity) {
+                t.opacity = luvut[kolmio * k + 9];
+            } else {
+                t.opacity = 255;
+            }
             kolmiot.add(t);
         }
         ImageBase ib = new ImageBase();
@@ -58,23 +63,28 @@ public class Triangler {
         image = ImageUtils.getImage(logo);
         int width = image.getWidth();
         int height = image.getHeight();
-        maxarvot = new int[]{width, height, width, height, width, height, 255, 255, 255};
+        maxarvot = new int[]{width, height, width, height, width, height, 255, 255, 255, 255};
         int[] luvut = new int[lkm * k];
         for (int i = 0; i < lkm; i++) {
             int x = rnd(maxarvot[0]);
             int y = rnd(maxarvot[1]);
-            int r = rnd(maxarvot[6]);
-            int g = rnd(maxarvot[7]);
-            int b = rnd(maxarvot[8]);
-            luvut[i*k+0] = x;
-            luvut[i*k+1] = y;
-            luvut[i*k+2] = x;
-            luvut[i*k+3] = y;
-            luvut[i*k+4] = x;
-            luvut[i*k+5] = y;
-            luvut[i*k+6] = r;
-            luvut[i*k+7] = g;
-            luvut[i*k+8] = b;
+            Color color = new Color(image.getRGB(x, y));
+            int r = color.getRed();
+            int g = color.getGreen();
+            int b = color.getBlue();
+//            int r = rnd(maxarvot[6]);
+//            int g = rnd(maxarvot[7]);
+//            int b = rnd(maxarvot[8]);
+            luvut[i * k + 0] = x;
+            luvut[i * k + 1] = y;
+            luvut[i * k + 2] = x;
+            luvut[i * k + 3] = y;
+            luvut[i * k + 4] = x;
+            luvut[i * k + 5] = y;
+            luvut[i * k + 6] = r;
+            luvut[i * k + 7] = g;
+            luvut[i * k + 8] = b;
+            luvut[i * k + 9] = 255;
         }
 
         ImageBase base = luvutToKuva(luvut);
@@ -82,14 +92,35 @@ public class Triangler {
         System.out.println("0: distance: " + distance);
         System.out.println(base);
         int index = 0;
+//        double vanha = 0;
 
         while (true) {
             int lukuind = index++ % luvut.length;
             muuta(luvut, lukuind);
 
+            switch (index) {
+                case 1:
+                    erot = new int[]{-200, -100, -50, -10, -1, 1, 10, 50, 100, 200};
+                    break;
+                case 1000:
+                    erot = new int[]{-20, -1, 1, 20};
+                    break;
+                case 5000:
+                    opacity = true;
+                    break;
+            }
+
             base = luvutToKuva(luvut);
             long newDistance = ImageUtils.compare(base, image);
             distance = newDistance;
+            
+//            if (!opacity && (index % 300 == 0)) {
+//                if (vanha==distance) {
+//                    opacity = true;
+//                }
+//                vanha = distance;
+//            }
+            
             if (index % 100 == 0) {
                 System.out.println(index + ": distance: " + distance);
                 System.out.println(base);
