@@ -1,5 +1,6 @@
 package mathathon2017;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -63,9 +64,10 @@ public class Triangler {
         for (int i = 0; i < lkm; i++) {
             int x = rnd(maxarvot[0]);
             int y = rnd(maxarvot[1]);
-            int r = rnd(maxarvot[6]);
-            int g = rnd(maxarvot[7]);
-            int b = rnd(maxarvot[8]);
+            Color color = new Color(image.getRGB(x, y));
+            int r = color.getRed();
+            int g = color.getGreen();
+            int b = color.getBlue();
             luvut[i*k+0] = x;
             luvut[i*k+1] = y;
             luvut[i*k+2] = x;
@@ -94,9 +96,9 @@ public class Triangler {
                 System.out.println(index + ": distance: " + distance);
                 System.out.println(base);
             }
-            if (index % 1000 == 0) {
+            if (index % 10 == 0) {
                 ImageUtils.saveImage(base, "pics/best" + index, image.getWidth(), image.getHeight());
-                if (index % 10000 == 0) {
+                if (index % 100000 == 0) {
                     ImageUtils.submitPicture(base);
                 }
             }
