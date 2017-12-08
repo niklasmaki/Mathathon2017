@@ -79,13 +79,13 @@ public class Triangler {
         else {
             switch(rnd(4)){
             case 0:
-                t.red = rnd(255);
+                t.red = changeColor(triangle.red);
                 break;
             case 1:
-                t.green = rnd(255);
+                t.green = changeColor(triangle.green);
                 break;
             case 2:
-                t.blue = rnd(255);
+                t.blue = changeColor(triangle.blue);
                 break;
             case 3:
                 t.opacity = 10+rnd(245);
@@ -93,6 +93,16 @@ public class Triangler {
             }
         }
         return t;
+    }
+    
+    private static int changeColor(int color) {
+        color = color + rnd(10) - 5;
+        if(color > 255) {
+            return 255;
+        } else if(color < 0) {
+            return 0;
+        }
+        return color;
     }
     
     private static boolean flipCoin() {
