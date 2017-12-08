@@ -123,7 +123,7 @@ public class Triangler {
     }
     
     private static int changeCoordinates(int position,int maxSize, long distance) {
-        int luku = (int) (distance/1000000 + 40);
+        int luku = (int) (4*distance/1000000 + 40);
         position = position + rnd(luku) - luku/2;
         if (position > maxSize) {
             return maxSize - 1;
@@ -134,7 +134,7 @@ public class Triangler {
     }
     
     private static int changeColor(int color,long distance) {
-        int variluku = (int) (10 + distance/1000000) ;
+        int variluku = (int) (10 + 2*distance/1000000) ;
         color = color + rnd(variluku) - variluku/2;
         if(color > 255) {
             return 255;
@@ -145,7 +145,7 @@ public class Triangler {
     }
     
     private static boolean flipCoin() {
-        return Math.random() > 0.5;
+        return Math.random() > 0.3;
     }
     
     private static int rnd(int max) {
