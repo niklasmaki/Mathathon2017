@@ -1,6 +1,7 @@
 package mathathon2017;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import mathathon2017.util.Coordinate;
 import mathathon2017.util.ImageBase;
@@ -10,9 +11,12 @@ public class Triangler {
     public static void main(String[] args) {
         String logo = "solinor_avatar.png";
         BufferedImage image = ImageUtils.getImage(logo);
+        EdgeDetector edgeDetector = new EdgeDetector();
+        List<Coordinate> edgeCoordinates = edgeDetector.getEdgeCoordinates(image);
+        
         ImageBase base = new ImageBase();
         for(int i = 0; i<30; i++) {
-            base.getTriangles().add(createRandomTriangle(image.getWidth(), image.getHeight()));
+            base.getTriangles().add(createRandomEdgePointTriangle(edgeCoordinates));
         }
         
         long distance = ImageUtils.compare(base, image);
@@ -40,6 +44,16 @@ public class Triangler {
                 base.getTriangles().add(original);
             }
         }
+    }
+    
+    private static Triangle createRandomEdgePointTriangle(List<Coordinate> edgeCoords) {
+        Triangle t = new Triangle();
+        t.a = edgeCoords.get(rnd(edgeCoords.size()));
+        t.b = edgeCoords.get(rnd(edgeCoords.size()));
+        t.c = edgeCoords.get(rnd(edgeCoords.size()));
+        t.setColor(5, 172, 240);
+        t.opacity = 255;
+        return t;
     }
     
     private static Triangle createRandomTriangle(int width, int height) {
