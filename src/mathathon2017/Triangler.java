@@ -19,14 +19,18 @@ public class Triangler {
         System.out.println("0: distance: " + distance);
         System.out.println(base);
         int index = 0;
-        
-        while(true) {
+        //Rajoitetaan 100 iteraatioon ja tutkitaan suppenemista eri arvoilla
+        int iteraatioita = 0;
+        long uusDistance = distance;
+        long alkuDistance = distance;
+        while(iteraatioita < 101) {
             Triangle original = base.getTriangles().remove(0);
             Triangle mutated = mutate(original, image);
             base.getTriangles().add(mutated);
             long newDistance = ImageUtils.compare(base, image);
             if(newDistance < distance) {
                 distance = newDistance;
+                uusDistance = newDistance;
                 System.out.println(index + ": distance: " + distance);
                 System.out.println(base);
                 index++;
@@ -34,12 +38,17 @@ public class Triangler {
                     ImageUtils.saveImage(base, "pics/best" + index, image.getWidth(), image.getHeight());
 //                    ImageUtils.submitPicture(base); 
                 }
+                iteraatioita++;
             }
             else {
                 base.getTriangles().remove(base.getTriangles().size()-1);
                 base.getTriangles().add(original);
+                iteraatioita++;
             }
+            
         }
+        //Tänne tulostus suppenemisesta
+        System.out.println("Distance parani: " + (alkuDistance - uusDistance));
     }
     
     private static Triangle createRandomTriangle(int width, int height) {
@@ -51,6 +60,7 @@ public class Triangler {
         t.opacity = 255;
         return t;
     }
+    
     private static Triangle mutate(Triangle triangle, BufferedImage image) {
         Triangle t = triangle.copy();
         if(flipCoin()) {
@@ -96,7 +106,7 @@ public class Triangler {
     }
     
     private static int changeCoordinates(int position,int maxSize) {
-        position = position + rnd(70) - 35;
+        position = position + rnd(40) - 20;
         if (position > maxSize) {
             return maxSize - 1;
         } else if(position < 0) {
@@ -106,7 +116,7 @@ public class Triangler {
     }
     
     private static int changeColor(int color) {
-        color = color + rnd(20) - 10;
+        color = color + rnd(10) - 5;
         if(color > 255) {
             return 255;
         } else if(color < 0) {
