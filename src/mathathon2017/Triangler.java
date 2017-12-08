@@ -52,7 +52,7 @@ public class Triangler {
             }
             
         }
-        //Tänne tulostus suppenemisesta
+        //Tï¿½nne tulostus suppenemisesta
         System.out.println("Distance parani: " + (alkuDistance - uusDistance));
     }
     
@@ -133,7 +133,7 @@ public class Triangler {
                 t.blue = changeColor(t.blue);
                 break;
             case 3:
-                t.opacity = 10+rnd(245);
+                t.opacity = changeColor(t.opacity);
                 break;
             }
         }
