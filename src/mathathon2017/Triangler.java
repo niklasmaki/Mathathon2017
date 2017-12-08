@@ -1,5 +1,6 @@
 package mathathon2017;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -23,14 +24,18 @@ public class Triangler {
         System.out.println("0: distance: " + distance);
         System.out.println(base);
         int index = 0;
-        
-        while(true) {
+        //Rajoitetaan 100 iteraatioon ja tutkitaan suppenemista eri arvoilla
+        int iteraatioita = 0;
+        long uusDistance = distance;
+        long alkuDistance = distance;
+        while(iteraatioita < 101) {
             Triangle original = base.getTriangles().remove(0);
             Triangle mutated = mutate(original, image);
             base.getTriangles().add(mutated);
             long newDistance = ImageUtils.compare(base, image);
             if(newDistance < distance) {
                 distance = newDistance;
+                uusDistance = newDistance;
                 System.out.println(index + ": distance: " + distance);
                 System.out.println(base);
                 index++;
@@ -38,12 +43,17 @@ public class Triangler {
                     ImageUtils.saveImage(base, "pics/best" + index, image.getWidth(), image.getHeight());
 //                    ImageUtils.submitPicture(base); 
                 }
+                iteraatioita++;
             }
             else {
                 base.getTriangles().remove(base.getTriangles().size()-1);
                 base.getTriangles().add(original);
+                iteraatioita++;
             }
+            
         }
+        //Tänne tulostus suppenemisesta
+        System.out.println("Distance parani: " + (alkuDistance - uusDistance));
     }
     
     private static Triangle createRandomEdgePointTriangle(List<Coordinate> edgeCoords) {
@@ -65,6 +75,27 @@ public class Triangler {
         t.opacity = 255;
         return t;
     }
+    
+    private static void setColorOfTriangle(int ax, int ay, int bx, int by, int cx, int cy, BufferedImage image, Triangle t) {
+        double lambda = 1/10;
+        int kax = (ax + bx + cx)/3;
+        int kay = (ay + by + cy)/3;
+        int aax = (int) Math.round(lambda*(bx-ax) + lambda*(cx-ax) + ax);
+        int aay = (int) Math.round(lambda*(by-ay) + lambda*(cy-ay) + ay);
+        int bax = (int) Math.round(lambda*(ax-bx) + lambda*(cx-bx) + bx);
+        int bay = (int) Math.round(lambda*(ay-by) + lambda*(cy-by) + by);
+        int cax = (int) Math.round(lambda*(ax-cx) + lambda*(ax-cx) + cx);
+        int cay = (int) Math.round(lambda*(ay-cy) + lambda*(ay-cy) + cy);
+        Color yksi = new Color(image.getRGB(kax, kay));
+        Color kaksi = new Color(image.getRGB(aax, aay));
+        Color kolme = new Color(image.getRGB(bax, bay));
+        Color nelja = new Color(image.getRGB(cax, cay));
+        int red = (yksi.getRed() + kaksi.getRed() + kolme.getRed() + nelja.getRed())/4;
+        int green = (yksi.getGreen() + kaksi.getGreen() + kolme.getGreen() + nelja.getGreen())/4;
+        int blue = (yksi.getBlue() + kaksi.getBlue() + kolme.getBlue() + nelja.getBlue())/4;
+        t.setColor(red, green, blue);
+    }
+    
     private static Triangle mutate(Triangle triangle, BufferedImage image) {
         Triangle t = triangle.copy();
         if(flipCoin()) {
@@ -110,7 +141,7 @@ public class Triangler {
     }
     
     private static int changeCoordinates(int position,int maxSize) {
-        position = position + rnd(70) - 35;
+        position = position + rnd(40) - 20;
         if (position > maxSize) {
             return maxSize - 1;
         } else if(position < 0) {
@@ -120,7 +151,7 @@ public class Triangler {
     }
     
     private static int changeColor(int color) {
-        color = color + rnd(20) - 10;
+        color = color + rnd(10) - 5;
         if(color > 255) {
             return 255;
         } else if(color < 0) {
