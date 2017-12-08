@@ -17,7 +17,7 @@ public class Triangler {
         
         ImageBase base = new ImageBase();
         for(int i = 0; i<30; i++) {
-            base.getTriangles().add(createRandomEdgePointTriangle(edgeCoordinates));
+            base.getTriangles().add(createRandomEdgePointTriangle(edgeCoordinates,image));
         }
         
         long distance = ImageUtils.compare(base, image);
@@ -28,7 +28,7 @@ public class Triangler {
         int iteraatioita = 0;
         long uusDistance = distance;
         long alkuDistance = distance;
-        while(iteraatioita < 101) {
+        while(iteraatioita < 1001) {
             Triangle original = base.getTriangles().remove(0);
             Triangle mutated = mutate(original, image);
             base.getTriangles().add(mutated);
@@ -56,12 +56,12 @@ public class Triangler {
         System.out.println("Distance parani: " + (alkuDistance - uusDistance));
     }
     
-    private static Triangle createRandomEdgePointTriangle(List<Coordinate> edgeCoords) {
+    private static Triangle createRandomEdgePointTriangle(List<Coordinate> edgeCoords,BufferedImage image) {
         Triangle t = new Triangle();
         t.a = edgeCoords.get(rnd(edgeCoords.size()));
         t.b = edgeCoords.get(rnd(edgeCoords.size()));
         t.c = edgeCoords.get(rnd(edgeCoords.size()));
-        t.setColor(5, 172, 240);
+        setColorOfTriangle(t.a.x,t.a.y,t.b.x,t.b.y,t.c.x,t.c.y,image,t);
         t.opacity = 255;
         return t;
     }
