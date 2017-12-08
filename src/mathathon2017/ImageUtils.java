@@ -69,7 +69,7 @@ public class ImageUtils {
     }
     
     public static void saveImage(ImageBase base, String fileName, int width, int height) {
-        File output = new File(fileName);
+        File output = new File(fileName + ".png");
         try {
             ImageIO.write(drawImage(base, width, height), "png", output);
         } catch (IOException e) {

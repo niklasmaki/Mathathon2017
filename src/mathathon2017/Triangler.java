@@ -32,7 +32,7 @@ public class Triangler {
                 index++;
                 if(index%10==0) {
                     ImageUtils.saveImage(base, "pics/best" + index, image.getWidth(), image.getHeight());
-                    ImageUtils.submitPicture(base); 
+//                    ImageUtils.submitPicture(base); 
                 }
             }
             else {
