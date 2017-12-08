@@ -18,7 +18,7 @@ import mathathon2017.util.ImageBase;
 public class ImageUtils {
     
     private static String teamName = "test";
-    private static String resultServiceURL = "http://solinor.herokuapp.com/submit/" +teamName;
+    private static String resultServiceURL = "http://solinor.herokuapp.com/submit/" + "HelvetinHyv‰‰BBQKastiketta";
     public static BufferedImage getImage(String path) {
         File imgFile = new File(path);
         BufferedImage image = null;
@@ -69,7 +69,7 @@ public class ImageUtils {
     }
     
     public static void saveImage(ImageBase base, String fileName, int width, int height) {
-        File output = new File(fileName);
+        File output = new File(fileName + ".png");
         try {
             ImageIO.write(drawImage(base, width, height), "png", output);
         } catch (IOException e) {

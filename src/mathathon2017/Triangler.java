@@ -47,7 +47,7 @@ public class Triangler {
         t.a = new Coordinate(rnd(height), rnd(width));
         t.b = new Coordinate(rnd(height), rnd(width));
         t.c = new Coordinate(rnd(height), rnd(width));
-        t.setColor(rnd(255), rnd(255), rnd(255));
+        t.setColor(5, 172, 240);
         t.opacity = 10 + rnd(245);
         return t;
     }
