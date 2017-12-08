@@ -53,7 +53,7 @@ public class Triangler {
             
         }
         //T�nne tulostus suppenemisesta
-        System.out.println("Distance parani: " + (alkuDistance - uusDistance));
+        
     }
     
     private static Triangle createRandomEdgePointTriangle(List<Coordinate> edgeCoords) {
