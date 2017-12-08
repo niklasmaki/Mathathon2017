@@ -25,7 +25,8 @@ public class Triangler {
             t.red = luvut[kolmio * k + 6];
             t.green = luvut[kolmio * k + 7];
             t.blue = luvut[kolmio * k + 8];
-            t.opacity = 255; // luvut[kolmio * k + 9];
+            t.opacity = 255;
+            // t.opacity = luvut[kolmio * k + 9];
             kolmiot.add(t);
         }
         ImageBase ib = new ImageBase();
@@ -60,9 +61,20 @@ public class Triangler {
         maxarvot = new int[]{width, height, width, height, width, height, 255, 255, 255};
         int[] luvut = new int[lkm * k];
         for (int i = 0; i < lkm; i++) {
-            for (int j = 0; j < k; j++) {
-                luvut[i * k + j] = rnd(maxarvot[j]);
-            }
+            int x = rnd(maxarvot[0]);
+            int y = rnd(maxarvot[1]);
+            int r = rnd(maxarvot[6]);
+            int g = rnd(maxarvot[7]);
+            int b = rnd(maxarvot[8]);
+            luvut[i*k+0] = x;
+            luvut[i*k+1] = y;
+            luvut[i*k+2] = x;
+            luvut[i*k+3] = y;
+            luvut[i*k+4] = x;
+            luvut[i*k+5] = y;
+            luvut[i*k+6] = r;
+            luvut[i*k+7] = g;
+            luvut[i*k+8] = b;
         }
 
         ImageBase base = luvutToKuva(luvut);
@@ -78,13 +90,13 @@ public class Triangler {
             base = luvutToKuva(luvut);
             long newDistance = ImageUtils.compare(base, image);
             distance = newDistance;
-            if (index % 10 == 0) {
+            if (index % 100 == 0) {
                 System.out.println(index + ": distance: " + distance);
                 System.out.println(base);
             }
-            if (index % 100 == 0) {
+            if (index % 1000 == 0) {
                 ImageUtils.saveImage(base, "pics/best" + index, image.getWidth(), image.getHeight());
-                if (index % 1000 == 0) {
+                if (index % 10000 == 0) {
                     ImageUtils.submitPicture(base);
                 }
             }
