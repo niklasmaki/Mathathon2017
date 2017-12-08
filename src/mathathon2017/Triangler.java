@@ -28,7 +28,7 @@ public class Triangler {
         int iteraatioita = 0;
         long uusDistance = distance;
         long alkuDistance = distance;
-        while(iteraatioita < 1001) {
+        while(true) {
             Triangle original = base.getTriangles().remove(0);
             Triangle mutated = mutate(original, image);
             base.getTriangles().add(mutated);
@@ -53,7 +53,6 @@ public class Triangler {
             
         }
         //T�nne tulostus suppenemisesta
-        System.out.println("Distance parani: " + (alkuDistance - uusDistance));
     }
     
     private static Triangle createRandomEdgePointTriangle(List<Coordinate> edgeCoords,BufferedImage image) {
