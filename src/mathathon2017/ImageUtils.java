@@ -17,8 +17,8 @@ import mathathon2017.util.ImageBase;
 
 public class ImageUtils {
     
-    private static String teamName = "HelvetinHyvääBBQKastiketta";
-    private static String resultServiceURL = "http://solinor.herokuapp.com/submit/" + "HelvetinHyvï¿½ï¿½BBQKastiketta";
+    private static String teamName = "o5sncdtr5n";
+    private static String resultServiceURL = "http://solinor.herokuapp.com/submit/" +teamName;
     public static BufferedImage getImage(String path) {
         File imgFile = new File(path);
         BufferedImage image = null;
@@ -79,18 +79,16 @@ public class ImageUtils {
     }
     
     public static boolean submitPicture(ImageBase image) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        try {
-        restTemplate.put(resultServiceURL, image);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+         RestTemplate restTemplate = new RestTemplate();
+         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+         try {
+         restTemplate.put(resultServiceURL, image);
+         }
+         catch(Exception e) {
+             e.printStackTrace();
+             return false;
+         }
         return true;
         
     }
-    
-    
 }
