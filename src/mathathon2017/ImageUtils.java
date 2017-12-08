@@ -18,7 +18,7 @@ import mathathon2017.util.ImageBase;
 public class ImageUtils {
     
     private static String teamName = "test";
-    private static String resultServiceURL = "http://solinor.herokuapp.com/submit/" + "HelvetinHyv‰‰BBQKastiketta";
+    private static String resultServiceURL = "http://solinor.herokuapp.com/submit/" + "trololol";
     public static BufferedImage getImage(String path) {
         File imgFile = new File(path);
         BufferedImage image = null;
