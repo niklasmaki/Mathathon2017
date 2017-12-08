@@ -1,5 +1,6 @@
 package mathathon2017;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import mathathon2017.util.Coordinate;
@@ -12,7 +13,7 @@ public class Triangler {
         BufferedImage image = ImageUtils.getImage(logo);
         ImageBase base = new ImageBase();
         for(int i = 0; i<30; i++) {
-            base.getTriangles().add(createRandomTriangle(image.getWidth(), image.getHeight()));
+            base.getTriangles().add(createRandomTriangle(image.getWidth(), image.getHeight(),image));
         }
         
         long distance = ImageUtils.compare(base, image);
@@ -42,15 +43,36 @@ public class Triangler {
         }
     }
     
-    private static Triangle createRandomTriangle(int width, int height) {
+    private static Triangle createRandomTriangle(int width, int height, BufferedImage image) {
         Triangle t = new Triangle();
         t.a = new Coordinate(rnd(height), rnd(width));
         t.b = new Coordinate(rnd(height), rnd(width));
         t.c = new Coordinate(rnd(height), rnd(width));
-        t.setColor(5, 172, 240);
+        setColorOfTriangle(t.a.x,t.a.y,t.b.x,t.b.y,t.c.x,t.c.y,image,t);
         t.opacity = 255;
         return t;
     }
+    
+    private static void setColorOfTriangle(int ax, int ay, int bx, int by, int cx, int cy, BufferedImage image, Triangle t) {
+        double lambda = 1/10;
+        int kax = (ax + bx + cx)/3;
+        int kay = (ay + by + cy)/3;
+        int aax = (int) Math.round(lambda*(bx-ax) + lambda*(cx-ax) + ax);
+        int aay = (int) Math.round(lambda*(by-ay) + lambda*(cy-ay) + ay);
+        int bax = (int) Math.round(lambda*(ax-bx) + lambda*(cx-bx) + bx);
+        int bay = (int) Math.round(lambda*(ay-by) + lambda*(cy-by) + by);
+        int cax = (int) Math.round(lambda*(ax-cx) + lambda*(ax-cx) + cx);
+        int cay = (int) Math.round(lambda*(ay-cy) + lambda*(ay-cy) + cy);
+        Color yksi = new Color(image.getRGB(kax, kay));
+        Color kaksi = new Color(image.getRGB(aax, aay));
+        Color kolme = new Color(image.getRGB(bax, bay));
+        Color nelja = new Color(image.getRGB(cax, cay));
+        int red = (yksi.getRed() + kaksi.getRed() + kolme.getRed() + nelja.getRed())/4;
+        int green = (yksi.getGreen() + kaksi.getGreen() + kolme.getGreen() + nelja.getGreen())/4;
+        int blue = (yksi.getBlue() + kaksi.getBlue() + kolme.getBlue() + nelja.getBlue())/4;
+        t.setColor(red, green, blue);
+    }
+    
     private static Triangle mutate(Triangle triangle, BufferedImage image) {
         Triangle t = triangle.copy();
         if(flipCoin()) {
