@@ -113,7 +113,7 @@ public class Triangler {
         System.out.println("0: distance: " + distance);
         System.out.println(base);
         int index = 0;
-//        double vanha = 0;
+        double vanha = 0;
 
         while (true) {
             int lukuind = index++ % luvut.length;
@@ -127,12 +127,15 @@ public class Triangler {
             long newDistance = ImageUtils.compare(base, image);
             distance = newDistance;
 
-//            if (!opacity && (index % 300 == 0)) {
-//                if (vanha==distance) {
-//                    opacity = true;
-//                }
-//                vanha = distance;
-//            }
+            if (opacity && (index % 300 == 0)) {
+                if (vanha == distance) {
+                    for (int i = 0; i < k * lkm; i++) {
+                        luvut[i] += rnd(20) - 10;
+                        luvut[i] = Math.min(maxarvot[i % k], Math.max(0, luvut[i]));
+                    }
+                }
+                vanha = distance;
+            }
             if (index % 100 == 0) {
                 System.out.println(index + ": distance: " + distance);
                 System.out.println(base);
