@@ -16,8 +16,8 @@ public class Triangler {
     private static BufferedImage image;
     private static boolean opacity = false;
     private static int opacitytime = 2400;
-    private static double c = 0.05;
-    private static double b = 4;
+    private static double c = 0.125;
+    private static double b = 4.1;
 
     private static ImageBase luvutToKuva(int[] luvut) {
         ArrayList<Triangle> kolmiot = new ArrayList<>();
@@ -138,13 +138,13 @@ public class Triangler {
                 System.out.println(base);
             }
             if (index % 1000 == 0) {
-                ImageUtils.saveImage(base, "pics/best" + index, image.getWidth(), image.getHeight());
-                if (index % 10000 == 0) {
+                    ImageUtils.saveImage(base, "pics/best" + index, image.getWidth(), image.getHeight());
+                    if (index % 10000 == 0) {
                     ImageUtils.submitPicture(base);
+                    }
                 }
             }
         }
-    }
 
     private static int rnd(int max) {
         return (int) (Math.random() * max);
