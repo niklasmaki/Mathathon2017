@@ -100,12 +100,15 @@ public class Triangler {
 
             switch (index) {
                 case 1:
-                    erot = new int[]{-200, -100, -50, -10, -1, 1, 10, 50, 100, 200};
+                    erot = new int[]{-200, -150, -100, -50, -20, -10, -5, -1, 1, 5, 10, 20, 50, 100, 150, 200};
                     break;
-                case 1000:
-                    erot = new int[]{-20, -1, 1, 20};
+                case 1200:
+                    erot = new int[]{-50, -20, -5, -1, 1, 5, 20, 50};
                     break;
-                case 5000:
+                case 2400:
+                    erot = new int[]{-20, -5, -1, 1, 5, 20};
+                    break;
+                case 2401:
                     opacity = true;
                     break;
             }
@@ -113,14 +116,13 @@ public class Triangler {
             base = luvutToKuva(luvut);
             long newDistance = ImageUtils.compare(base, image);
             distance = newDistance;
-            
+
 //            if (!opacity && (index % 300 == 0)) {
 //                if (vanha==distance) {
 //                    opacity = true;
 //                }
 //                vanha = distance;
 //            }
-            
             if (index % 100 == 0) {
                 System.out.println(index + ": distance: " + distance);
                 System.out.println(base);
