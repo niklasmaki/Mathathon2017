@@ -15,7 +15,9 @@ public class Triangler {
     private static int[] maxarvot;
     private static BufferedImage image;
     private static boolean opacity = false;
-    private static int[] erot = new int[]{-20, -1, 1, 20};
+    private static int opacitytime = 2400;
+    private static double c = 0.05;
+    private static double b = 4;
 
     private static ImageBase luvutToKuva(int[] luvut) {
         ArrayList<Triangle> kolmiot = new ArrayList<>();
@@ -27,11 +29,7 @@ public class Triangler {
             t.red = luvut[kolmio * k + 6];
             t.green = luvut[kolmio * k + 7];
             t.blue = luvut[kolmio * k + 8];
-            if (opacity) {
-                t.opacity = luvut[kolmio * k + 9];
-            } else {
-                t.opacity = 255;
-            }
+            t.opacity = luvut[kolmio * k + 9];
             kolmiot.add(t);
         }
         ImageBase ib = new ImageBase();
@@ -39,23 +37,46 @@ public class Triangler {
         return ib;
     }
 
-    private static void muuta(int[] luvut, int ind) {
+    private static void muuta(int[] luvut, int ind, int index) {
+        if (!opacity && (ind % k == 9)) {
+            return;
+        }
+        int max = maxarvot[ind % k];
+
+        int d = (int) (1 + c * max * Math.exp(-Math.log(2) / b * (index / luvut.length)));
+
         int luku = luvut[ind];
         long etaisyys = ImageUtils.compare(luvutToKuva(luvut), image);
-        int paras = luku;
-        for (int ero : erot) {
-            int a = luku + ero;
-            if (a < 0 || a > maxarvot[ind % k]) {
-                continue;
+
+        long etP = etaisyys;
+        int aP = luku + d;
+        for (; aP < maxarvot[ind % k]; aP += d) {
+            luvut[ind] = aP;
+            long uusiet = ImageUtils.compare(luvutToKuva(luvut), image);
+            if (uusiet > etP) {
+                break;
             }
-            luvut[ind] = a;
-            long uusietaisyys = ImageUtils.compare(luvutToKuva(luvut), image);
-            if (uusietaisyys < etaisyys) {
-                paras = a;
-                etaisyys = uusietaisyys;
-            }
+            etP = uusiet;
         }
-        luvut[ind] = paras;
+        aP -= d;
+
+        long etN = etaisyys;
+        int aN = luku - d;
+        for (; aN >= 0; aN -= d) {
+            luvut[ind] = aN;
+            long uusiet = ImageUtils.compare(luvutToKuva(luvut), image);
+            if (uusiet > etN) {
+                break;
+            }
+            etN = uusiet;
+        }
+        aN += d;
+
+        if (etP < etN) {
+            luvut[ind] = aP;
+        } else {
+            luvut[ind] = aN;
+        }
     }
 
     public static void main(String[] args) {
@@ -96,22 +117,11 @@ public class Triangler {
 
         while (true) {
             int lukuind = index++ % luvut.length;
-            muuta(luvut, lukuind);
 
-            switch (index) {
-                case 1:
-                    erot = new int[]{-200, -150, -100, -50, -20, -10, -5, -1, 1, 5, 10, 20, 50, 100, 150, 200};
-                    break;
-                case 1200:
-                    erot = new int[]{-50, -20, -5, -1, 1, 5, 20, 50};
-                    break;
-                case 2400:
-                    erot = new int[]{-20, -5, -1, 1, 5, 20};
-                    break;
-                case 2401:
-                    opacity = true;
-                    break;
+            if (index == opacitytime) {
+                opacity = true;
             }
+            muuta(luvut, lukuind, index);
 
             base = luvutToKuva(luvut);
             long newDistance = ImageUtils.compare(base, image);
@@ -134,10 +144,6 @@ public class Triangler {
                 }
             }
         }
-    }
-
-    private static boolean flipCoin() {
-        return Math.random() > 0.5;
     }
 
     private static int rnd(int max) {
