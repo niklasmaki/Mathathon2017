@@ -10,14 +10,14 @@ import mathathon2017.util.Triangle;
 
 public class Triangler {
 
-    private static int lkm = 30;
-    private static int k = 10;
+    private static final int lkm = 30;
+    private static final int k = 10;
     private static int[] maxarvot;
     private static BufferedImage image;
     private static boolean opacity = false;
-    private static int opacitytime = 2400;
-    private static double c = 0.125;
-    private static double b = 4.1;
+    private static final int opacitytime = 2400;
+    private static final double c = 0.125;
+    private static final double b = 4.1;
 
     private static ImageBase luvutToKuva(int[] luvut) {
         ArrayList<Triangle> kolmiot = new ArrayList<>();
@@ -108,10 +108,12 @@ public class Triangler {
             luvut[i * k + 9] = 255;
         }
 
-        ImageBase base = luvutToKuva(luvut);
-        long distance = ImageUtils.compare(base, image);
-        System.out.println("0: distance: " + distance);
-        System.out.println(base);
+//        ImageBase base = luvutToKuva(luvut);
+        ImageBase base;
+        long distance;
+//        long distance = ImageUtils.compare(base, image);
+//        System.out.println("0: distance: " + distance);
+//        System.out.println(base);
         int index = 0;
         double vanha = 0;
 
@@ -129,6 +131,8 @@ public class Triangler {
 
             if (opacity && (index % 300 == 0)) {
                 if (vanha == distance) {
+                    System.out.println(index + ": distance: " + distance + " (local minimum)");
+                    ImageUtils.submitPicture(base);
                     for (int i = 0; i < k * lkm; i++) {
                         luvut[i] += rnd(20) - 10;
                         luvut[i] = Math.min(maxarvot[i % k], Math.max(0, luvut[i]));
@@ -136,18 +140,22 @@ public class Triangler {
                 }
                 vanha = distance;
             }
-            if (index % 100 == 0) {
+            if (index % 300 == 0) {
                 System.out.println(index + ": distance: " + distance);
-                System.out.println(base);
+                ImageUtils.submitPicture(base);
             }
-            if (index % 1000 == 0) {
-                    ImageUtils.saveImage(base, "pics/best" + index, image.getWidth(), image.getHeight());
-                    if (index % 10000 == 0) {
-                    ImageUtils.submitPicture(base);
-                    }
-                }
-            }
+            
+            
+//            if (index % 100 == 0) {
+//                System.out.println(index + ": distance: " + distance);
+//                System.out.println(base);
+//            }
+//            if (index % 1000 == 0) {
+//                    ImageUtils.saveImage(base, "pics/best" + index, image.getWidth(), image.getHeight());
+//                    
+//                }
         }
+    }
 
     private static int rnd(int max) {
         return (int) (Math.random() * max);
