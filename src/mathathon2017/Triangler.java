@@ -87,8 +87,8 @@ public class Triangler {
         maxarvot = new int[]{width, height, width, height, width, height, 255, 255, 255, 255};
         int[] luvut = new int[lkm * k];
         for (int i = 0; i < lkm; i++) {
-            int x = rnd(maxarvot[0]);
-            int y = rnd(maxarvot[1]);
+            int x = (width / 5 * (i % 5)) + (width / 10);
+            int y = (height / 6 * ((int) Math.floor(i / 5)) + (height / 12));
             Color color = new Color(image.getRGB(x, y));
             int r = color.getRed();
             int g = color.getGreen();
